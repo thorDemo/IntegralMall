@@ -245,9 +245,14 @@ export default {
       eventSmallBox.parentNode.children[1].style.display = 'block'
 
       // 父元素的其他兄弟元素的子元素操作
-      for (var j = 0; j < siblingss.length; j++) {
-        siblingss[j].children[1].style.display = 'none'
-        siblingss[j].children[0].style.display = 'block'
+      for (var j = 0, sibLengs = siblingss.length; j < sibLengs; j++) {
+        // 错误处理，由于未开始是没有display属性的，所以会报错影响其他元素的展开，所以做一个错误处理
+        try {
+          siblingss[j].children[1].style.display = 'none'
+          siblingss[j].children[0].style.display = 'block'
+        } catch (e) {
+          console.log(e)
+        }
       }
     },
 
@@ -287,7 +292,7 @@ export default {
           }
         // eslint-disable-next-line handle-callback-err
         }).catch(error => {
-          if (status = 401) {
+          if (Response.status = 401) {
             this.loginMessages()
           } else {
             this.errorMessages()
@@ -324,7 +329,7 @@ export default {
           }
         // eslint-disable-next-line handle-callback-err
         }).catch(error => {
-          if (status = 401) {
+          if (Response.status = 401) {
             this.loginMessages()
           } else {
             this.errorMessages()
@@ -512,7 +517,7 @@ export default {
 }
 
 .nbaGussBigBox-team-1{
-  margin-left: 18%;
+  margin-left: 15%;
 }
 
 .nbaGussBigBox-team-2,.nbaGussBigBox-team-3{
