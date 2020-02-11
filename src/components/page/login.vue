@@ -70,4 +70,7 @@ export default {
 #app{
   background: transparent !important
 }
+.loginBg {
+  height: 100%;
+}
 </style>
