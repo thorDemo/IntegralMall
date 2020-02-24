@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopNavC for-child-msg='商品详情'></TopNavC>
+    <router-link to="/shouye"><TopNavC for-child-msg='商品详情'></TopNavC></router-link>
     <div class="main-second-wrap">
       <!-- 商品详情 -->
       <div class="order-product-wrap">
@@ -124,65 +124,61 @@ export default {
     }
   },
   created () {
-    if (window.token == ''){
-      window.requirePath = '/order'
-      this.$router.push('/login')
+    Axios({
+      method: 'get',
+      url: 'https://bmw1984.com/api/mulu/' + localStorage.getItem('orderid') + '/?format=json'
+    })
+      .then(Response => {
+        this.commodity = Response.data
+        this.commodity.pc_img.url = 'https://bmw1984.com' + this.commodity.pc_img.url
+        if (this.commodity.app_img) {
+          this.commodity.app_img.url = 'https://bmw1984.com' + this.commodity.app_img.url
+        }
+      })
+      // eslint-disable-next-line handle-callback-err
+      .catch(error => {
+        console.log('商品加载错误')
+        this.$router.push('/shouye')
+      })
+    if (localStorage.getItem('orderid') == 300) {
+      Axios({
+        method: 'get',
+        url: 'https://bmw1984.com/api/auth/sign/query/?format=json',
+        headers: {
+          Authorization: 'Token ' + window.token
+        }
+      })
+        .then(Response => {
+          this.D_price = Math.round(this.commodity.points * 1)
+          this.J_status = Response.data.total_points >= 280 ? 1 : 0
+          console.log('加载用户信息完毕')
+        })
+        // eslint-disable-next-line handle-callback-err
+        .catch(error => {
+          console.log('加载用户信息错误')
+        })
     } else {
       Axios({
         method: 'get',
-        url: 'https://bmw1984.com/api/mulu/' + localStorage.getItem('orderid') +'/?format=json',
+        url: 'https://bmw1984.com/api/auth/points/?format=json',
+        headers: {
+          Authorization: 'Token ' + window.token
+        }
       })
         .then(Response => {
-          this.commodity = Response.data
-          this.commodity.pc_img.url = 'https://bmw1984.com' + this.commodity.pc_img.url
-          if (this.commodity.app_img) {
-            this.commodity.app_img.url = 'https://bmw1984.com' + this.commodity.app_img.url
-          }
+          this.D_price = Math.round(this.commodity.points * Response.data.discount)
+          this.J_status = Response.data.balance_common_points > this.D_price ? 1 : 0
+          console.log('加载用户信息完毕')
         })
+        // eslint-disable-next-line handle-callback-err
         .catch(error => {
-          console.log('商品加载错误')
-          this.$router.push('/shouye')
+          console.log('加载用户信息错误')
         })
-      if (localStorage.getItem('orderid') == 300) {
-        Axios({
-          method: 'get',
-          url: 'https://bmw1984.com/api/auth/sign/query/?format=json',
-          headers: {
-            Authorization: 'Token ' + window.token
-          }
-        })
-          .then(Response => {
-            this.D_price = Math.round(this.commodity.points * 1)
-            this.J_status = Response.data.total_points >= 280 ? 1 : 0
-            console.log('加载用户信息完毕')
-          })
-          .catch(error => {
-            console.log('加载用户信息错误')
-          })
-      } else {
-        Axios({
-          method: 'get',
-          url: 'https://bmw1984.com/api/auth/points/?format=json',
-          headers: {
-            Authorization: 'Token ' + window.token
-          }
-        })
-          .then(Response => {
-            this.D_price = Math.round(this.commodity.points * Response.data.discount)
-            this.J_status = Response.data.balance_common_points > this.D_price ? 1 : 0
-            console.log('加载用户信息完毕')
-          })
-          .catch(error => {
-            console.log('加载用户信息错误')
-          })
-      }
-      
     }
-    
   },
   methods: {
     submit (e) {
-      e.preventDefault();
+      e.preventDefault()
       if (localStorage.getItem('orderid') == 300) {
         Axios({
           method: 'post',
@@ -196,6 +192,7 @@ export default {
             alert(Response.data.message)
             this.$router.push('/shouye')
           })
+          // eslint-disable-next-line handle-callback-err
           .catch(error => {
             alert('提交错误')
             this.$router.push('/shouye')
@@ -213,6 +210,7 @@ export default {
             alert(Response.data.message)
             this.$router.push('/shouye')
           })
+          // eslint-disable-next-line handle-callback-err
           .catch(error => {
             alert('提交错误')
             this.$router.push('/shouye')
@@ -220,7 +218,7 @@ export default {
       }
     },
     goback (e) {
-      e.preventDefault();
+      e.preventDefault()
       this.$router.push('/shouye')
     }
   }

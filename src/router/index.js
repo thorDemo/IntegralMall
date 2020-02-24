@@ -65,15 +65,15 @@ export default new Router({
     },
     {
       path: '/guanyu',
-      component: Guanyu,
+      component: Guanyu
     },
     {
       path: '/yiwen',
-      component: Yiwen,
+      component: Yiwen
     },
     {
       path: '/guize',
-      component: Guize,
+      component: Guize
     },
     {
       path: '/chouJiang',
@@ -84,7 +84,7 @@ export default new Router({
       component: guessNBA
     },
     {
-      path: '/search',     
+      path: '/search',
       component: Search,
       meta: {index: 2, title: '<p>搜索</p>'}
     },

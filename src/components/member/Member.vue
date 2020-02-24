@@ -132,84 +132,80 @@ export default {
     }
   },
   created () {
-    if (window.token === '') {
-      window.requirePath = '/Member'
-      this.$router.push('/login')
-    } else {
-      Axios({
-        method: 'get',
-        url: 'https://bmw1984.com/api/auth/user/?format=json',
-        headers: {
-          // eslint-disable-next-line no-undef
-          Authorization: 'Token ' + token
-        }
+    Axios({
+      method: 'get',
+      url: 'https://bmw1984.com/api/auth/user/?format=json',
+      headers: {
+        // eslint-disable-next-line no-undef
+        Authorization: 'Token ' + token
+      }
+    })
+      .then(Response => {
+        this.auth = Response.data
+        console.log(Response.data, 2000)
       })
-        .then(Response => {
-          this.auth = Response.data
-          console.log(Response.data, 2000)
-        })
-        .catch(error => {
-          console.log(error)
-          this.errorMessages('y用户信息加载错误，请联系在线客服！', 5000)
-          // this.$router.push('/shouye')
-        })
-      Axios({
-        method: 'get',
-        url: 'https://bmw1984.com/api/auth/points/?format=json',
-        headers: {
-          // eslint-disable-next-line no-undef
-          Authorization: 'Token ' + token
-        }
+      .catch(error => {
+        console.log(error)
+        this.errorMessages('y用户信息加载错误，请联系在线客服！', 5000)
+        // this.$router.push('/shouye')
       })
-        .then(Response => {
-          this.integral = Response.data
-          this.integral.img_url = this.level_img[Response.data.shop_level]
-        })
-        .catch(error => {
-          console.log(error)
-          this.errorMessages('等级加载错误，请联系在线客服！', 5000)
-          // this.$router.push('/shouye')
-        })
-      Axios({
-        method: 'get',
-        url: 'https://bmw1984.com/api/auth/sign/query/?format=json',
-        headers: {
-          // eslint-disable-next-line no-undef
-          Authorization: 'Token ' + token
-        }
+    Axios({
+      method: 'get',
+      url: 'https://bmw1984.com/api/auth/points/?format=json',
+      headers: {
+        // eslint-disable-next-line no-undef
+        Authorization: 'Token ' + token
+      }
+    })
+      .then(Response => {
+        this.integral = Response.data
+        this.integral.img_url = this.level_img[Response.data.shop_level]
       })
-        .then(Response => {
-          this.Sign = Response.data.data
-          this.total_sign_points = Response.data.total_points
-          this.Sing_day = Response.data.continuity_days
-          this.last_sign = Response.data.tomorrow
-          this.sign_status = Response.data.status
-          if (Response.data.status === 201) {
-            this.sign_message = '已签到'
-            this.sign_active = true
-          }
-          // console.log(Response.data)
-        })
-        .catch(error => {
-          console.log(error)
-          this.errorMessages('签到获取错误', 5000)
-          // this.$router.push('/shouye')
-        })
-      Axios({
-        method: 'get',
-        url: 'https://bmw1984.com/api/auth/app/downland/',
-        headers: {
-          // eslint-disable-next-line no-undef
-          Authorization: 'Token ' + token
-        }
+      .catch(error => {
+        console.log(error)
+        this.errorMessages('等级加载错误，请联系在线客服！', 5000)
+        // this.$router.push('/shouye')
       })
-        .then(Response => {
-          this.r_b_dis_allow = Response.data.r_b_dis_allow
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    Axios({
+      method: 'get',
+      url: 'https://bmw1984.com/api/auth/sign/query/?format=json',
+      headers: {
+        // eslint-disable-next-line no-undef
+        Authorization: 'Token ' + token
+      }
+    })
+      .then(Response => {
+        console.log(Response)
+        this.Sign = Response.data.data
+        this.total_sign_points = Response.data.total_points
+        this.Sing_day = Response.data.continuity_days
+        this.last_sign = Response.data.tomorrow
+        this.sign_status = Response.data.status
+        if (Response.data.status === 201) {
+          this.sign_message = '已签到'
+          this.sign_active = true
+        }
+        // console.log(Response.data)
+      })
+      .catch(error => {
+        console.log(error)
+        this.errorMessages('签到获取错误', 5000)
+        // this.$router.push('/shouye')
+      })
+    Axios({
+      method: 'get',
+      url: 'https://bmw1984.com/api/auth/app/downland/',
+      headers: {
+        // eslint-disable-next-line no-undef
+        Authorization: 'Token ' + token
+      }
+    })
+      .then(Response => {
+        this.r_b_dis_allow = Response.data.r_b_dis_allow
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   mounted: function () {
   },

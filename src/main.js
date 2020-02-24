@@ -41,10 +41,9 @@ router.beforeEach((to, from, next) => {
         headers: {
           Authorization: 'Token ' + window.token
         }
-      })
-      .then(res => {
+      }).then(res => {
         next()
-      }).catch(error =>{
+      }).catch(error => {
         alert('登录信息已经过期，请重新登录')
         window.requirePath = to.fullPath
         next({
@@ -72,4 +71,3 @@ new Vue({
   },
   template: '<App/>'
 })
-
