@@ -38,7 +38,9 @@
               </div>
             </el-tab-pane>
           </template>
-          <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
+          <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
+            <template slot="no-more">------------ 我可是有底线的 哇咔咔 ------------</template>
+          </infinite-loading>
         </el-tabs>
       </div>
     </div>
@@ -80,7 +82,7 @@ export default {
       },
       bannerData: [
         {link: '/guessNBA', img: require('../../assets/images/banner/sy_NBA_banner@3x.png')},
-        {link: '/chouJiang', img: require('../../assets/images/banner/sy_cgcj_banner@3x.png')},
+        {link: '/chouJiang', img: require('../../assets/images/banner/sy_cgcj_banner@3x.png')}
       ],
       activateName: '0',
       menuData: [
@@ -117,6 +119,7 @@ export default {
         } else {
           $state.complete()
         }
+      // eslint-disable-next-line handle-callback-err
       }).catch(error => {
         $state.complete()
       })

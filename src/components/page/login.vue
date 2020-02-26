@@ -1,7 +1,7 @@
 <template>
   <div class="loginBg">
     <form class="login-wrap">
-        <img class="login-logo" src="../../assets/images/login/logo.png" alt=""/>
+        <router-link to="/"><img class="login-logo" src="../../assets/images/login/logo.png"  alt=""/></router-link>
         <div class="login-input">
             <label for="loginName" class="loginName">
                 <input v-model="loginForm.username" type="text" placeholder="请输入您的用户名" id="loginName" autocomplete="off"/>
@@ -43,7 +43,7 @@ export default {
       if (this.loginForm.username === '' || this.loginForm.password === '') {
         error1.textContent = '用户名或密码不能为空'
         error1.style.cssText = 'display:block'
-        return
+        return false
       } else {
         axios({
           method: 'post',
@@ -57,6 +57,7 @@ export default {
             window.localStorage.setItem('token', res.data.key)
             window.token = res.data.key
             this.$router.push({path: window.requirePath})
+          // eslint-disable-next-line handle-callback-err
           }).catch(error => {
             error1.textContent = '用户名或密码错误，请重新输入！'
             error1.style.cssText = 'display:block'

@@ -1,7 +1,6 @@
 <template>
   <div id='nbaBox'>
-    <TopnavC for-child-msg='每日抽奖'></TopnavC>
-
+    <router-link to="/Youhui"><TopnavC for-child-msg='NBA竞猜'></TopnavC></router-link>
       <div id='nbaGuessPage'>
           <div id="nbaTopMessages">
               <br>
@@ -268,7 +267,7 @@ export default {
       // 点击后就禁用按钮，防止重复提交
       this.winnerBtnShow.pointerEvents = 'none'
       if (window.token === '') {
-        window.requirePath = '/guessNBA'
+        window.requirePath = '/Youhui'
         this.$router.push('/login')
       } else {
         let nbaNum = this.Nbadata[index].competition.pk
@@ -285,14 +284,14 @@ export default {
           }
         }).then(Response => {
           let RequsMessages = Response.data.message
-          if (RequsMessages == '提交成功') {
+          if (RequsMessages === '提交成功') {
             this.winerOneBg.backgroundColor = '#b51e1a'
           } else {
             this.requestMessages()
           }
         // eslint-disable-next-line handle-callback-err
         }).catch(error => {
-          if (Response.status = 401) {
+          if (Response.status === 401) {
             this.loginMessages()
           } else {
             this.errorMessages()
@@ -305,7 +304,7 @@ export default {
       // 点击后就禁用按钮，防止重复提交
       this.winnerBtnShow.pointerEvents = 'none'
       if (window.token === '') {
-        window.requirePath = '/order'
+        window.requirePath = '/Youhui'
         this.$router.push('/login')
       } else {
         let nbaNum = this.Nbadata[index].competition.pk
@@ -329,7 +328,7 @@ export default {
           }
         // eslint-disable-next-line handle-callback-err
         }).catch(error => {
-          if (Response.status = 401) {
+          if (Response.status === 401) {
             this.loginMessages()
           } else {
             this.errorMessages()
@@ -353,7 +352,7 @@ export default {
       this.$message({
         message: '对不起，您今日存款金额不足388元，不能参与竞猜。若有疑问，请联系在线客服',
         type: 'warning',
-        duration: 5000,
+        duration: 6000,
         offset: 50,
         center: true,
         showClose: true

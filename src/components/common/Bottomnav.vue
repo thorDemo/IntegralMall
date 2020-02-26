@@ -32,7 +32,7 @@ export default {
         {normal: require('../../assets/images/navLogo/gw_x@3x.png'), selected: require('../../assets/images/navLogo/gw@3x.png')},
         {normal: require('../../assets/images/navLogo/zs_x@3x.png'), selected: require('../../assets/images/navLogo/zs@3x.png')},
         {normal: require('../../assets/images/navLogo/wd_x@3x.png'), selected: require('../../assets/images/navLogo/wd@3x.png')}
-      ],
+      ]
     }
   },
   methods: {

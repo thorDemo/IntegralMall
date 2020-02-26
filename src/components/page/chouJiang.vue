@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopNavC for-child-msg='每日抽奖'></TopNavC>
+    <router-link to="/Youhui"><TopNavC for-child-msg='每日抽奖'></TopNavC></router-link>
     <div class="choujiang-page main-second-wrap" :style="{backgroundImage: 'url(' + mainbg + ')'}">
       <div class="game-detail">
         <h4>活动详情：</h4>
